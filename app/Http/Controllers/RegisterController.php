@@ -24,9 +24,16 @@ class RegisterController extends Controller
         
         if (Auth::attempt(['email'=>$request->email, 'password'=>$request->password])) {
             $request->session()->regenerate();
- 
-            return 'logged in';
+
+            //return 'logged in';
+            if (Auth::user()->type=='user') {
+                return view('user');
+             } else if (Auth::user()->type=='owner') {
+                 return view('owner');
+               }
         }
+
+
     }
 
 }

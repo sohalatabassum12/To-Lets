@@ -6,6 +6,7 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>woner</h1>
+<a href="{{route('product.create')}}">upload product</a>  
+<a href="{{url('logout')}}">Log Out</a>  
 </body>
 </html>

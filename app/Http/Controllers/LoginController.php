@@ -17,72 +17,52 @@ class LoginController extends Controller
         return view('login');
     }
 
-    //public function loginCheck(Request $req)
-     //{
-    //     if (Auth::attempt(['email' => $req->email, 'password' => $req->password])) {
-          
-    //         if (Auth::user()->enum == 'woner') {
-                
-    //             return view('woner-profile');
-                
-    //         } else if (Auth::user()->enum=='user') {
-                
-    //             return view('user-profile');
-    //         }
-    //     }else{
-    //           return redirect()->back();
-    //     }
-
-         
-    //}
-
-
-public function loginCheck(Request $req)
-{
-    // Validate the request
-    $req->validate([
-        'email' => 'required|email',
-        'password' => 'required'
-    ]);
-
-    // Attempt to authenticate the user
-    if (!Auth::attempt(['email' => $req->email, 'password' => $req->password])) {
-        return (['login' => 'Invalid credentials']);
-    }
-
-    // Retrieve the authenticated user
-    $user = Auth::user();
-
-    if (!$user) {
-        return redirect()->back()->withErrors(['login' => 'User not found']);
-    }
-
-    // Log user details for debugging
-    Log::info('Authenticated User:', ['registers' => $user]);
-
-    // Check the enum field
-    if ($user->enum == 'woner') {
-        return view('woner-profile');
-    } else if ($user->enum == 'user') {
-        return view('user-profile');
-    } else {
-        return redirect()->back()->withErrors(['login' => 'Invalid user type']);
-    }
-}
-
     public function login(Request $request){
-        $credentials = $request->validate([
+        $data = $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required'],
-        ]);
-        
-        if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
-            
-            return 'logged in';
-        }
+        ],[
+            'name.required' => 'please add name',
+            'email.required'=>'please add valid email'
+       ]);
+   
 
-        return "not";
-    }
+        if (Auth::attempt($data)) {
+            $request->session()->regenerate();
+
+           // return 'logged in';
+
+        if (Auth::user()->type == 'user') {
+            return view('user');
+         } else if (Auth::user()->type=='owner') {
+             return view('owner');
+           }
+
+           return redirect()->back()->withErrors([
+            'email' => 'The provided credentials do not match our records.',
+        ]);
+        }
+}
+public function logout()
+{
+    Auth::logout();
+    return redirect()->route('login');
+}
 
 }
+//     public function login(Request $request){
+//         $credentials = $request->validate([
+//             'email' => ['required', 'email'],
+//             'password' => ['required'],
+//         ]);
+        
+//         if (Auth::attempt($credentials)) {
+//             $request->session()->regenerate();
+            
+//             return 'logged in';
+//         }
+
+//         return "not";
+//     }
+
+// }

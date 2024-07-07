@@ -14,8 +14,7 @@
         <br>
         PASSWORD:<input type="password" name="password">
         <br>
-
-        CONFIRM PASSWORD:<input type="password" name="Confirm Password">
+ CONFIRM PASSWORD:<input type="password" name="Confirm Password">
         <br>
 
         REGISTER AS 

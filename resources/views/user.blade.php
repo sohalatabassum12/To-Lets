@@ -6,12 +6,6 @@
     <title>Document</title>
 </head>
 <body>
-    
-    <form action="" method="post">
-        @csrf
-        <input type="text" name="name">name
-        <input type="text" name="address">address
-    </form>
-
+<a href="{{url('logout')}}">Log Out</a>  
 </body>
 </html>
