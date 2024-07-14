@@ -9,15 +9,13 @@ use Illuminate\Support\Facades\Auth;
 class ProductController extends Controller
 {
     public function index(){
+        
         $products = Product::all();
         return view('products', compact('products'));
     }
 
 
-    public function create(){
-        // $product = Product::all();
-            //    $id = Auth::user()->id;
-            //    return $id;
+    public function create(){;
             $products = Auth::user()->products;
                 return view('create-product');
             }
@@ -42,44 +40,70 @@ class ProductController extends Controller
                     'rooms.required' => 'please add how many rooms',
                     'description.required' => 'please add description'
                 ]);
-            // $user=Auth::user();
-            // return $user;
-            //$user = User::find(3);
-        // $product = Auth::user()->products()->create($data);
-        auth()->user()->products()->create([
-                    'name' => $request->name, 
-                    'address' => $request->address, 
-                    'video' => $request->video, 
-                    'price' => $request->price,
-                    'rooms' => $request->rooms, 
-                    'floor' => $request->floor,
-                    'description' => $request->description,
-                    //'user_id'=>Auth::user()->id 
-                ]);
-    
-                    
-                // $product = new Product();
-    
-                // $product->name = $request->name;
-                // $product->address = $request->address;
-                // $product->image = $request->image;
-                // $product->video = $request->video;
-                // $product->rooms = $request->rooms;
-                // $product->price = $request->price;
-                // $product->floor = $request->price;
-    
             
-                // $product->save();
-    
-                // return to_route('product');
-            
-    
-                // if ($file = $request->file('image')) {
-                
-                //     $name = time() . $file->getClientOriginalName();
         
-                //     $file->move('images', $name);
-                // }
-            return ('ok'); 
+
+
+        
+        if ($file = $request->file('image')) {
+           
+            $image_name = time() . $file->getClientOriginalName();
+ 
+            $file->move('images', $image_name);
+        }
+        //auth()->user()->products()->create([
+        Product::create([
+                    'name'   => $request->name, 
+                    'address'=> $request->address,
+                    'image'  =>$image_name,
+                    'video'  => $request->video, 
+                    'price'  => $request->price,
+                    'rooms'  => $request->rooms, 
+                    'floor'  => $request->floor,
+                    'description' => $request->description,
+                    'user_id'=>Auth::user()->id 
+        ]);
+                return redirect()->route('product.list'); 
             }
+            
+            public function edit($id,Product $product)
+            {
+                $product = Product::findOrFail($id);
+
+                return view('edit-product', compact('product'));
+            }
+
+
+    public function update($id, Request $request)
+    {
+        $product = Product::findOrFail($id);
+        
+        if ($file = $request->file('image')) {
+           
+            $image_name = time() . $file->getClientOriginalName();
+ 
+            $file->move('images', $image_name);
+        }
+        $product->update([
+            'name' => $request->name,
+            'address'=> $request->address,
+            'image'  =>$image_name,
+            'video'  => $request->video, 
+            'rooms'  => $request->rooms, 
+            'floor'  => $request->floor,
+            'description' => $request->description,
+            'price' => $request->price
+        ]);
+
+        return redirect()->route('product.list');
+    }
+    public function delete(Product $product) {
+
+        unlink(public_path(). '/images/' . $product->image);
+        $product->delete();
+
+        return to_route('product.list');
+    }
+
+
 }

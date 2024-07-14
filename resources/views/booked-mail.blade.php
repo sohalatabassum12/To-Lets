@@ -6,7 +6,8 @@
     <title>Document</title>
 </head>
 <body>
-    <a href="{{url('profile/create')}}">Create user Profile</a>
-    <a href="{{url('logout')}}">Log Out</a>  
+
+    <h2>You have a booked house request</h2>
+    
 </body>
 </html>

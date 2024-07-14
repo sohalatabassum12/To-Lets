@@ -1,6 +1,6 @@
-show errors
-image upload
-image show
+show errors..done
+image upload..done
+image show..done
 Edit
 Delete
 create user profile- update

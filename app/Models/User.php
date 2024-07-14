@@ -52,4 +52,11 @@ class User extends Authenticatable
     public function products(){
         return $this->hasMany(Product::class);
     }
+    public function userProfiles(){
+        return $this->hasMany(UserProfile::class);
+    }
+
+    public function sender() {
+        return $this->hasMany(Message::class, 'sender_id');
+    }
 }
