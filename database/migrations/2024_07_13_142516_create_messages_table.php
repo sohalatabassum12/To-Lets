@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('sender_id');
             $table->integer('receiver_id');
+            $table->integer('product_id');
             $table->longText('message');
             $table->timestamps();
         });

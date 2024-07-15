@@ -47,6 +47,7 @@ Route::get('/profile/{profile}/delete', [UserProfileController::class, 'delete']
    
 
 Route::get('/book/{product}', [BookHouseController::class, 'status'])->name('house.book')->middleware('auth');
+Route::get('/book/{product}/confirm', [BookHouseController::class, 'confirm'])->name('house.book.confirm')->middleware('auth');
 Route::get('/message/{productId}', [MessageController::class, 'index'])->name('message');
 Route::post('/message/send', [MessageController::class, 'send'])->name('message.send');
 Route::get('/user', function(){

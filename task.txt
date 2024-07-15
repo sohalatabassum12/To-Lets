@@ -6,3 +6,5 @@ Delete
 create user profile- update
 middleware
 policy
+
+email

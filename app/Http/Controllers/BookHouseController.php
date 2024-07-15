@@ -23,4 +23,19 @@ class BookHouseController extends Controller
 
         return back();
     }
+
+    public function confirm(Product $product) {
+        
+        // $product->status = Product::pending;
+        // $product->save();
+        $product->update([
+            'status' => Product::booked
+        ]);
+
+
+
+        //Mail::to($product->user)->send(new HouseBookedMail());
+
+        return back();
+    }
 }

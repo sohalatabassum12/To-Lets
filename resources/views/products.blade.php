@@ -24,9 +24,12 @@
            <a href="{{route('house.book', $product->id)}}">Book Now</a>
            @elseif ($product->status == $product::pending)  
            <a href="{{route('house.book', $product->id)}}">Pending</a>
+           @can('view', $product)
+           <a href="{{route('house.book.confirm', $product->id)}}">Mark as booked</a>
+           @endcan  
            <a href="{{route('message', $product->id)}}">Send Message</a>
            @else
-           <a href="{{route('house.book', $product->id)}}">Booked</a>
+           <a href="#">Booked</a>
            @endif
             @can('view', $product)
             <a href="{{ route('product.edit', $product->id) }}">Edit</a>
